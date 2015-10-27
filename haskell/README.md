@@ -37,7 +37,7 @@ If a function takes two parameters, we can also call it as an infix function by 
 
 ## GHCI file
 * https://downloads.haskell.org/~ghc/7.4.2/docs/html/users_guide/ghci-dot-files.html
-*https://wiki.haskell.org/GHC/GHCi
+* https://wiki.haskell.org/GHC/GHCi
 
 
 ## Bookmark

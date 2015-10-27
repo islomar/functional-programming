@@ -1,6 +1,5 @@
 # Playground for Scala
 
-## meetapp
 Examples shown during the Meetup on 26th October 2015, by Juan Manuel Serrano (@jmshac), of ScalaMAD: "Programación funcional con Scala: al compilador y al abogado, háblales claro"
 
 Event: http://www.meetup.com/es/Scala-Programming-Madrid/events/225921857
