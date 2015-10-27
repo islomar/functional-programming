@@ -2,6 +2,5 @@
 
 Playground for learning about functional programming (Haskell, Scala, etc.)
 
-## Haskell
-
-## Scala
+* [Haskell](./haskell/README.md)
+* [Scala](./scala/README.md)
