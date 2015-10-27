@@ -39,5 +39,7 @@ If a function takes two parameters, we can also call it as an infix function by 
 * https://downloads.haskell.org/~ghc/7.4.2/docs/html/users_guide/ghci-dot-files.html
 * https://wiki.haskell.org/GHC/GHCi
 
+## GHCI commands
+* :l baby.hs   >> loads the file baby.hs
 
 ## Bookmark
