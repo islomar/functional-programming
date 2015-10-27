@@ -40,6 +40,6 @@ If a function takes two parameters, we can also call it as an infix function by 
 * https://wiki.haskell.org/GHC/GHCi
 
 ## GHCI commands
-* :l baby.hs   >> loads the file baby.hs
+* `:l baby.hs`   >> loads the file baby.hs
 
 ## Bookmark
