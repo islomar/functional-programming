@@ -258,6 +258,6 @@ Functions can't begin with uppercase letters.
 
 
 ## GHCI commands
-* :l baby.hs   >> loads the file baby.hs
+* `:l baby.hs`   >> loads the file baby.hs
 
 ## Bookmark
