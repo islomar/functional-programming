@@ -1,8 +1,11 @@
-# Playground for Haskell
+# Introduction
 
-Notes and examples from "Learn you Haskell for good": learnyouhaskell.com
-URL:	http://learnyouahaskell.com/
+This is a playground for Haskell.
 
+Currently, it includes notes and examples from "Learn you Haskell for good": learnyouhaskell.com
+
+
+# Starting out
 
 ## Ready, set, go!
 
@@ -89,15 +92,169 @@ ghci> 10 `elem` [3,4,5,6]
 False`
 
 
+## Texas ranges
+`ghci> [1..20]  
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]`
+
+You should better avoid using floating point numbers in ranges.
+`ghci> [0.1, 0.3 .. 1]  
+[0.1,0.3,0.5,0.7,0.8999999999999999,1.0999999999999999]`
+
+You can also use ranges to make infinite lists by just not specifying an upper limit. Later we'll go into more detail on infinite lists. For now, let's examine how you would get the first 24 multiples of 13. Sure, you could do [13,26..24*13]. But there's a better way: **take 24 [13,26..]**. **Because Haskell is lazy, it won't try to evaluate the infinite list immediately because it would never finish.** It'll wait to see what you want to get out of that infinite lists. And here it sees you just want the first 24 elements and it gladly obliges.
+
+
+## I'm a list comprehension
+If you've ever taken a course in mathematics, you've probably run into set **comprehensions**. They're normally used for building more specific sets out of general sets. A basic comprehension for a set that contains the first ten even natural numbers is S = { 2 * x | x belongs to N, x<=10}. 
+The part before the pipe is called the output function, x is the variable, N is the input set and x <= 10 is the **predicate**. That means that the set contains the doubles of all natural numbers that satisfy the predicate.
+List comprehensions are very similar to set comprehensions:
+`ghci> [x*2 | x <- [1..10]]  
+[2,4,6,8,10,12,14,16,18,20]`
+
+Now let's add a condition (or a predicate) to that comprehension:
+`ghci> [x*2 | x <- [1..10], x*2 >= 12]  
+[12,14,16,18,20]  `
+
+`ghci> [ x | x <- [50..100], x `mod` 7 == 3]  
+[52,59,66,73,80,87,94] `
+
+We can include several predicates:
+`ghci> [ x | x <- [10..20], x /= 13, x /= 15, x /= 19]  
+[10,11,12,14,16,17,18,20]`
+
+Let's say we want a comprehension that replaces each odd number greater than 10 with "BANG!" and each odd number that's less than 10 with "BOOM!". If a number isn't odd, we throw it out of our list. For convenience, we'll put that comprehension inside a function so we can easily reuse it.
+
+boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x] 
+
+`ghci> boomBangs [7..13]  
+["BOOM!","BOOM!","BANG!","BANG!"] `
+
+`
+ghci> [ x*y | x <- [2,5,10], y <- [8,10,11]]  
+[16,20,22,40,50,55,80,100,110]
+`
+
+`
+ghci> [ x*y | x <- [2,5,10], y <- [8,10,11], x*y > 50]  
+[55,80,100,110] 
+`
+
+Let's write our own version of length! We'll call it length'.
+` length' xs = sum [1 | _ <- xs]   `
+_ means that we don't care what we'll draw from the list anyway so instead of writing a variable name that we'll never use, we just write _. This function replaces every element of a list with 1 and then sums that up. This means that the resulting sum will be the length of our list.
+
+`
+ghci> let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]  
+ghci> [ [ x | x <- xs, even x ] | xs <- xxs]  
+[[2,2,4],[2,4,6,8],[2,4,2,6,2,6]]
+`
+
+* cycle: takes a list and cycles it into an infinite list. If you just try to display the result, it will go on forever so you have to slice it off somewhere.
+`ghci> take 10 (cycle [1,2,3])  
+[1,2,3,1,2,3,1,2,3,1]  
+ghci> take 12 (cycle "LOL ")  
+"LOL LOL LOL "`
+* repeat: takes an element and produces an infinite list of just that element. It's like cycling a list with only one element.
+`ghci> take 10 (repeat 5)  
+[5,5,5,5,5,5,5,5,5,5]`
+
+
+
+## Tuples
+Unlike a list, a tuple can contain a combination of several types.
+They are denoted with parentheses and their components are separated by commas.
+ghci> let myTuple = [(1,2),(8,11),(4,5)]
+Use tuples when you know in advance how many components some piece of data should have.
+* fst: takes a pair and returns its first component.
+* snd: takes a pair and returns its second component.
+* zip: it produces a list of pairs
+`
+ghci> zip [1,2,3,4,5] [5,5,5,5,5]  
+[(1,5),(2,5),(3,5),(4,5),(5,5)]  
+ghci> zip [1 .. 5] ["one", "two", "three", "four", "five"]  
+[(1,"one"),(2,"two"),(3,"three"),(4,"four"),(5,"five")] 
+`
+
+Which right triangle that has integers for all sides and all sides equal to or smaller than 10 has a perimeter of 24?:
+`let rightTriangles' = [ (a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a+b+c == 24] `
+This is a common pattern in functional programming. You take a starting set of solutions and then you apply transformations to those solutions and filter them until you get the right ones.
+
+
+
+# Types and Typeclasses
+
+## Believe the type
+Previously we mentioned that Haskell has a static type system. The type of every expression is known at compile time, which leads to safer code.
+Unlike Java or Pascal, Haskell has type inference. If we write a number, we don't have to tell Haskell it's a number. It can infer that on its own.
+You can use :t to evaluate the type of an expression, for example:
+`ghci> :t 'a'  
+'a' :: Char `
+
+Here we see that doing :t on an expression prints out the expression followed by :: and its type. :: is read as "has type of".
+
+Functions also have types. When writing our own functions, we can choose to give them an explicit type declaration. This is generally considered to be good practice except when writing very short functions.
+
+removeNonUppercase :: [Char] -> [Char]
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']] 
+removeNonUppercase has a type of [Char] -> [Char], meaning that it maps from a string to a string.
+
+addThree :: Int -> Int -> Int -> Int  
+addThree x y z = x + y + z  
+The parameters are separated with -> and there's no special distinction between the parameters and the return type. The return type is the last item in the declaration and the parameters are the first three. 
+
+Some common types (types are written in capital case):
+* Int: Usually on 32-bit machines the maximum possible Int is 2147483647 and the minimum is -2147483648.
+* Integer: The main difference is that it's not bounded so it can be used to represent really really big numbers. I mean like really big. **Int, however, is more efficient.**
+* Float: real floating point with single precision.
+* Double: real floating point with double the precision!
+* Bool
+* Char
+* Ordering
+* Tuples are also a type
+
+
+
+## Typeclasses 101
+**A typeclass is a sort of interface that defines some behavior.** If a type is a part of a typeclass, that means that it supports and implements the behavior the typeclass describes. A lot of people coming from OOP get confused by typeclasses because they think they are like classes in object oriented languages. Well, they're not. You can think of them kind of as Java interfaces, only better.
+`
+ghci> :t (==)  
+(==) :: (Eq a) => a -> a -> Bool 
+`
+We see a new thing here, the => symbol. Everything before the => symbol is called a class constraint. We can read the previous type declaration like this: the equality function takes any two values that are of the same type and returns a Bool. The type of those two values must be a member of the Eq class (this was the class constraint).
+
+
+Some basic typeclasses:
+* Eq
+The **Eq** typeclass provides an interface for testing for equality. Any type where it makes sense to test for equality between two values of that type should be a member of the Eq class. All standard Haskell types except for IO (the type for dealing with input and output) and functions are a part of the Eq typeclass.
+* Ord
+* Show
+Members of Show can be presented as strings. All types covered so far except for functions are a part of Show. 
+* Read
+* Enum: members are sequentially ordered types
+Types in this class: (), Bool, Char, Ordering, Int, Integer, Float and Double.
+* Bounded
+* Num
+* Integral
+* Floating
+
+we can use explicit type annotations. Type annotations are a way of explicitly saying what the type of an expression should be. We do that by adding :: at the end of the expression and then specifying a type. Observe:
+`
+ghci> read "5" :: Int  
+5  
+ghci> read "5" :: Float  
+5.0  
+`
+
+A very useful function for dealing with numbers is fromIntegral.
+If we try to get a length of a list and then add it to 3.2, we'll get an error because we tried to add together an Int and a floating point number. So to get around this, we do fromIntegral (length [1,2,3,4]) + 3.2 and it all works out.
+
+# Others
 ## Naming conventions
 Functions can't begin with uppercase letters.
-
 
 
 ## GHCI file
 * https://downloads.haskell.org/~ghc/7.4.2/docs/html/users_guide/ghci-dot-files.html
 * https://wiki.haskell.org/GHC/GHCi
-
 
 
 ## GHCI commands
