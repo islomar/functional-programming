@@ -247,6 +247,19 @@ ghci> read "5" :: Float
 A very useful function for dealing with numbers is fromIntegral.
 If we try to get a length of a list and then add it to 3.2, we'll get an error because we tried to add together an Int and a floating point number. So to get around this, we do fromIntegral (length [1,2,3,4]) + 3.2 and it all works out.
 
+
+# Syntax in functions
+
+## Pattern matching
+(See example code on baby.hs)
+Pattern matching consists of specifying patterns to which some data should conform and then checking to see if it does and deconstructing the data according to those patterns.
+When defining functions, you can define separate function bodies for different patterns. This leads to really neat code that's simple and readable.
+ When making patterns, we should always include a catch-all pattern so that our program doesn't crash if we get some unexpected input.
+
+## Guards, guards!!
+
+
+
 # Others
 ## Naming conventions
 Functions can't begin with uppercase letters.
@@ -261,3 +274,4 @@ Functions can't begin with uppercase letters.
 * `:l baby.hs`   >> loads the file baby.hs
 
 ## Bookmark
+http://learnyouahaskell.com/syntax-in-functions
