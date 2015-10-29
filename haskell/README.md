@@ -257,7 +257,10 @@ When defining functions, you can define separate function bodies for different p
  When making patterns, we should always include a catch-all pattern so that our program doesn't crash if we get some unexpected input.
 
 ## Guards, guards!!
-
+* Whereas patterns are a way of making sure a value conforms to some form and deconstructing it, guards are a way of testing whether some property of a value (or several of them) are true or false.
+* Guards are indicated by pipes that follow a function's name and its parameters: see example code.
+* This is very reminiscent of a big if else tree in imperative languages, only this is far better and more readable. 
+* Many times, the last guard is otherwise. otherwise is defined simply as otherwise = True and catches everything. This is very similar to patterns, only they check if the input satisfies a pattern but guards check for boolean conditions.
 
 
 # Others
