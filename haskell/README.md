@@ -256,11 +256,40 @@ Pattern matching consists of specifying patterns to which some data should confo
 When defining functions, you can define separate function bodies for different patterns. This leads to really neat code that's simple and readable.
  When making patterns, we should always include a catch-all pattern so that our program doesn't crash if we get some unexpected input.
 
+
 ## Guards, guards!!
 * Whereas patterns are a way of making sure a value conforms to some form and deconstructing it, guards are a way of testing whether some property of a value (or several of them) are true or false.
 * Guards are indicated by pipes that follow a function's name and its parameters: see example code.
 * This is very reminiscent of a big if else tree in imperative languages, only this is far better and more readable. 
 * Many times, the last guard is otherwise. otherwise is defined simply as otherwise = True and catches everything. This is very similar to patterns, only they check if the input satisfies a pattern but guards check for boolean conditions.
+
+
+## Where!?
+* it avoids duplicating code and improves readibility.
+* where bindings can also be nested. It's a common idiom to make a function and define some helper function in its where clause and then to give those functions helper functions as well, each with its own where clause.
+
+
+## Let it be
+Very similar to where bindings are let bindings. Where bindings are a syntactic construct that let you bind to variables at the end of a function and the whole function can see them, including all the guards. Let bindings let you bind to variables anywhere and are expressions themselves, but are very local, so they don't span across guards.
+The form is let <bindings> in <expression>. The names that you define in the let part are accessible to the expression after the in part.
+The difference between "where" and "let" is that let bindings are expressions themselves. where bindings are just syntactic constructs.
+
+They can also be used to introduce functions in a local scope:
+ghci> [let square x = x * x in (square 5, square 3, square 2)]  
+[(25,9,4)] 
+
+If let bindings are so cool, why not use them all the time instead of where bindings, you ask? Well, since let bindings are expressions and are fairly local in their scope, they can't be used across guards. Some people prefer where bindings because the names come after the function they're being used in. That way, the function body is closer to its name and type declaration and to some that's more readable.
+
+
+## Case expressions
+It's pattern matching on parameters in function definitions!
+case expression of pattern -> result  
+                   pattern -> result  
+                   pattern -> result  
+                   ... 
+
+# Recursion
+
 
 
 # Others
