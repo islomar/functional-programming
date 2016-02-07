@@ -1,6 +1,6 @@
 # Functional programming playground
 
-Playground for learning about functional programming (Haskell, Scala, etc.)
+Playground for learning about functional programming (Haskell, Scala, Java, etc.)
 
 * [Haskell](./haskell/README.md)
 * [Scala](./scala/README.md)
