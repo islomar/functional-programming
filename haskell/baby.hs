@@ -143,3 +143,12 @@ describeList2 xs = "The list is " ++ what xs
     where what [] = "empty."  
           what [x] = "a singleton list."  
           what xs = "a longer list."
+
+-- RECURSION --
+maximum' :: (Ord a) => [a] -> a  
+maximum' [] = error "maximum of empty list"  
+maximum' [x] = x  
+maximum' (x:xs)   
+    | x > maxTail = x  
+    | otherwise = maxTail  
+    where maxTail = maximum' xs
