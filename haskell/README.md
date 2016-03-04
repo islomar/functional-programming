@@ -4,6 +4,7 @@ This is a playground for Haskell.
 
 Currently, it includes notes and examples from "Learn you Haskell for good": learnyouhaskell.com
 
+Webinar: https://www.dropbox.com/s/vyg4b96am0r6fhv/haskell-alejandro%20serrano.m4v?dl=0
 
 # Starting out
 
