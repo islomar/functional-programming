@@ -54,8 +54,14 @@ There are no equations in imperative languages like C and Java.
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/71170
 
 
+##GHCi
+`:quit`     >>  quit HGCi
+`:set +m`   >>  enable multiline
+`putStrLn "hello"`
+
 **Bookmark**
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/110660
+
 
 ##Glossary
 * RHS:     Right Hand Side
