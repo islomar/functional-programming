@@ -6,6 +6,10 @@ https://www.futurelearn.com/learning-guide
 https://about.futurelearn.com/blog/6-social-learning-tips/
 https://github.com/hemanth/functional-programming-jargon
 https://es.wikipedia.org/wiki/Haskell
+https://en.wikipedia.org/wiki/Glasgow_Haskell_Compiler
+
+##MOOC source code
+https://github.com/wimvanderbauwhede/HaskellMOOC
 
 ##HGCi installation
 https://www.haskell.org/downloads
@@ -57,6 +61,7 @@ https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/71170
 ##GHCi
 `:quit`     >>  quit HGCi
 `:set +m`   >>  enable multiline
+`:t <function_name` >> gets the type of a function
 `putStrLn "hello"`
 
 **Bookmark**
@@ -64,4 +69,5 @@ https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/11066
 
 
 ##Glossary
-* RHS:     Right Hand Side
+* RHS:      Right Hand Side
+* GHCi:     Glasgow Haskell Compiler Interactive
