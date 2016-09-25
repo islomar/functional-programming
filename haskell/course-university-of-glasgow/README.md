@@ -57,6 +57,98 @@ There are no equations in imperative languages like C and Java.
 ###Introduction to Expressions and Equations
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/71170
 
+###Summary
+* Expressions in Haskell are similar to those in other languages.
+* There are only expressions in Haskell, i.e. no statements.
+* Things that look like assignments are not updates of values but equations
+
+###More Basic Elements by Example
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/110660
+* Lambda functions
+`f = \x y -> x*x + y*y`
+
+* Block structures
+`<functionName> <parameters> = let <expressions> in <return_code>`
+Note that the let ... in ... construct is an expression, so it returns a value. That’s why there is no need for a return keyword.
+
+* Higher order functions (with a lambda function):
+`map (\x -> 2*x) [1..10]`
+
+###Reduction, Functions and Lists
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/71180
+
+####Reduction
+**A model of program execution**
+* A programmer needs a concrete model for how a program is executed.
+* For imperative programs, we can execute statement by statement, keeping track of the values of variables (the stack) and where we are in the program (the program counter).
+* Functional programs don’t have statements!
+* The mechanism for executing functional programs is reduction.
+
+**Reduction**
+Reduction is the process of converting an expression to a simpler form. Conceptually, an expression is reduced by simplifying one reducible expression (called “redex”) at a time. Each step is called a reduction, and we’ll use -- > to show the result.
+
+**The result doesn’t depend on reduction path!**
+A fundamental theorem (the Church-Rosser theorem):
+* Every terminating reduction path gives the same result
+
+This means that
+* Correctness doesn’t depend on order of evaluation.
+* The compiler (or programmer) can change the order freely to improve performance, without affecting the result.
+* Different expressions can be evaluated in parallel, without affecting the result. As a result, functional languages are leading contenders for programming future parallel systems.
+
+**Functions**
+* Haskell is a functional language so the function concept is the essential to the language. A function takes one or more arguments and computes a result. Given the same arguments, the result will always be the same. This is similar to a mathematical function and it means that in Haskell there are no side-effects. There are two fundamental operations on functions: function definition (creating a function) and function application (using a function to compute a result).
+* In Haskell, many functions are pre-defined in a standard library called the **prelude**.
+* A function is defined by an equation.
+
+**How function application works**
+* A function definition is an equation, e.g. 𝚏=∖𝚡→𝚡+𝟷f=∖x→x+1
+* The left hand side gives the name of the function;
+*The right hand side (the “body”) is an expression giving the formal parameters, and the value of the application. The expression may use the parameters.
+* An application is an expression like f 31, where 3131 is the argument.
+* The application is evaluated by replacing it with the body of the function, where the formal parameters are replaced by the arguments.
+
+**Function returning several results**
+* Actually, a function can return only one result.
+* However, lists allow you to package up several values into one object, which can be returned by a function.
+
+**Elements are evaluated lazily**: The elements can be expressions. They are evaluated only when they are used.
+
+**List comprehensions**
+* A list comprehension is a high level notation for specifying the computation of a list
+* The compiler automatically transforms a list comprehensions into an expression using a family of basic functions that operate on lists
+* List comprehensions were inspired by the mathematical notation set comprehension.
+
+The !!!! operator takes a list and an index, and returns the corresponding element.
+`[5,3,8,7]  !! 2    -- > 8`
+
+There are two ways to define a function:
+* You can either define a named function, e.g.f x = x+1
+* You can also define a function without a name, known as a "lambda function" (or "anonymous function" in other languages), for example `\x -> x+1`.
+  * Or you can use an equation to assign the lambda function to a variable: `fl = \x -> x+1`.
+* You can of course also define lambda functions with multiple arguments, e.g. `add3numsl = \x y z -> x + y + z`
+
+**Constructing lists**
+The (:) ("cons") operator takes a scalar and an existing lists, and returns a new list containing all the elements.
+For example, `23 : [48, 41, 44]`
+
+* There are standard library functions to give the head of a list (its first element) or the tail (all the rest of the list): head [4,5,6] returns 4.
+
+Tutorial 1.2:
+https://www.haskellmooc.co.uk/tutorial12/#step11
+* Defining a function: a function defines an expression with variables
+* Lambda functions: functions don't need a name
+* The list datastructure: the key datastructure in Haskell
+* Constructing lists: the (:) and (++) operators, sequences, comprehensions
+* Manipulating lists: indexing, head and tail
+
+**Recommended readings**
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/115884
+* Online help
+Other online sites also provide advice to Haskell beginners. For instance, the Haskell Cafe mailing list is a friendly place to post queries. There are also sub-reddits like haskellquestions.
+
+**Design patterns in Haskell**
+http://blog.ezyang.com/2010/05/design-patterns-in-haskel/
 
 ##GHCi
 `:quit`     >>  quit HGCi
@@ -64,8 +156,15 @@ https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/71170
 `:t <function_name` >> gets the type of a function
 `putStrLn "hello"`
 
-**Bookmark**
-https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/110660
+##Week 2
+* Not-equals operator: Use the /= operator (it's supposed to look like an equals sign with a line through it), to test for inequality, e.g. `1 /= 2`
+* We want a boolean function that returns true if a value is part of a list, and false otherwise. This is the elem function. Try `elem 1 [1,2,3]`
+* The elem function can be written infix, like an arithmetic operator, by enclosing its name in backquotes ``. Try 3 `elem` [1, 2, 3, 4, 5].
+* any Haskell infix operator, e.g. +, can be written as a prefix operator by enclosing it in parentheses, like (+) 1 1`
+
+
+##Bookmark
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/119003
 
 
 ##Glossary
