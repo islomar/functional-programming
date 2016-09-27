@@ -21,6 +21,11 @@ http://tryhaskell.org/
 https://www.haskellmooc.co.uk/#step14
 https://www.haskellmooc.co.uk/tutorial11/#step25
 
+##Haskell in Docker
+https://hub.docker.com/_/haskell/
+`docker run -it --rm haskell:7.10.3`
+`docker run -it --rm haskell:8.0.1`
+
 ##Week 1
 Expressions are really all there is, there are no statements. An expression evaluates to a result
 Functions:
@@ -162,9 +167,67 @@ http://blog.ezyang.com/2010/05/design-patterns-in-haskel/
 * The elem function can be written infix, like an arithmetic operator, by enclosing its name in backquotes ``. Try 3 `elem` [1, 2, 3, 4, 5].
 * any Haskell infix operator, e.g. +, can be written as a prefix operator by enclosing it in parentheses, like (+) 1 1`
 
+###Zip that list
+The zip function is used to combine a pair of lists into a list of pairs. 
+```
+Prelude> zip [1, 2, 3] [4, 5, 6]
+[(1,4),(2,5),(3,6)]
+```
+```
+Prelude> zip3 "glasgow" "beijing" "nairobi"
+[('g','b','n'),('l','e','a'),('a','i','i'),('s','j','r'),('g','i','o'),('o','n','b'),('w','g','i')]
+```
+
+The output is so long as the shortest list:
+```
+Prelude> zip [1..10] ['a'..'z']
+[(1,'a'),(2,'b'),(3,'c'),(4,'d'),(5,'e'),(6,'f'),(7,'g'),(8,'h'),(9,'i'),(10,'j')]
+```
+You can pass the function to apply to the zip:
+```
+Prelude> zipWith max [1,2,3] [0,2,4]
+[1,2,4]
+```
+Lambda expressions:
+```
+Prelude> zipWith (\x->(\y->(x,y))) [1,2,3] [0,2,4]
+[(1,0),(2,2),(3,4)]
+```
+
+###Booleans
+* Use the && infix operator as a boolean conjunction (AND function). This only evaluates to True when both its inputs are 
+* Haskell also defines the **xor function**, which returns true when its two boolean arguments are different (one is True and the other is False)
+```
+λ map (\inputs -> xor (fst inputs) (snd inputs)) [(x,y) | x<-[False, True], y<-[False, True]]
+[False,True,True,False]
+```
+`if 2*2==4 then "happy" else "sad"`
+
+###Input/Output
+* input (with getLine) and output (with putStrLn)
+* you can sequence IO operations with the do construct:
+`do { putStrLn "what is your name?"; x <- getLine; putStrLn ("hello " ++ x) }`
+* `do { putStrLn "what is your name?"; n<-getLine; let nUpper = map toUpper n in putStrLn ("HELLO " ++ nUpper) }`
+* Convert types:
+```
+λ read "42" :: Int
+42
+:: Int
+```
+* The **show** function is the dual of the read function. show takes a value and returns a String representation of that value. 
+* In fact, there is a single function called print that does the composition of putStrLn and show .... try `print 42`.
+
+Let's recap what we've discovered:
+* getLine and putStrLn for console input/output
+* using do to sequence IO actions
+* <- for binding values to variables with IO
+* show and read for converting from and to String values
+
+
 
 ##Bookmark
-https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/119003
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/116038
+
 
 
 ##Glossary
