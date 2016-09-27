@@ -1,4 +1,4 @@
--- starman.hs
+-- :l starman.hs
 -- Jeremy Singer
 -- based on a Functional Programming
 -- exercise from Glasgow,

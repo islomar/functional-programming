@@ -1,4 +1,5 @@
 -- simple factorial definition
+-- From the ghci, run :l factorial.hs
 
 fact2 :: Int -> Int
 fact2 0 = 1
