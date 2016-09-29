@@ -13,7 +13,11 @@ turn number_to_guess guess turns =
 -- user inputs a single char (first on the line)
 mkguess :: Int -> Int -> Int -> IO ()
 mkguess number_to_guess guess turns =
-    do putStrLn "Making a guess"
+    do  putStrLn "Making a guess"
+        putStr "  Enter your guess: "
+        q <- getLine
+        let turns' = turns - 1
+        turn number_to_guess guess turns'
 
 -- top-level function. Usage: starman "WORD" NUM_TURNS
 guess_number :: Int -> Int -> IO ()
