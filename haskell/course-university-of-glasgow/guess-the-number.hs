@@ -3,6 +3,7 @@ turn :: Int -> Int -> Int -> IO ()
 turn number_to_guess guess turns =
   do 
     putStrLn ("You want to guess the number " ++ (show number_to_guess))
+    putStrLn ("Your guess is " ++ (show guess))
     putStrLn ("You have " ++ (show turns) ++ " turns")
     do if turns==0
         then putStrLn "You lose"
@@ -15,9 +16,9 @@ mkguess :: Int -> Int -> Int -> IO ()
 mkguess number_to_guess guess turns =
     do  putStrLn "Making a guess"
         putStr "  Enter your guess: "
-        q <- getLine
+        guess' <- getLine
         let turns' = turns - 1
-        turn number_to_guess guess turns'
+        turn number_to_guess (read guess' :: Int) turns'
 
 -- top-level function. Usage: starman "WORD" NUM_TURNS
 guess_number :: Int -> Int -> IO ()
