@@ -223,10 +223,53 @@ Let's recap what we've discovered:
 * <- for binding values to variables with IO
 * show and read for converting from and to String values
 
+####Sequencing actions
+Input and output (I/O) operations are impure. They influence and interact with the ‘outside world’. 
+
+Order of function evaluation doesn’t matter in pure code
+However this is not the case where I/O is concerned. Sequencing is vital for I/O actions.
+
+`do { planet <- getLine; home <- getLine; putStrLn ("greetings " ++ planet ++ "ling."); putStrLn ("I am from " ++ home ++ "."); putStrLn "Take me to your leader."}`
+`let a= reverse "winston"; b = reverse "churchill"  in "sir " ++a ++" "++ b`
+One more thing to notice: inside the do, we associate results of IO functions with names using <-. Inside the let, we associate pure function results with names using =.
+
+####Monads are Hiding Below
+The do notation allows us to sequence actions. This looks just like a sequence of commands in an imperative programming language. However, do is only syntactic sugar. Underneath, it is rewritten as a chain of function calls where the output of the first function becomes the input of the second function.
+
+Monads are a powerful tool for sequencing operations.
+
+For now, all we need to understand is:
+* I/O operations are impure
+* use do to specify a sequence of actions
+* use <- inside a do to associate input values with names
+* any value or function that involves I/O has IO in its type
+* a sequence of I/O actions is described as being **in the IO Monad**
+
+##Challenges
+* Guess the number
+* Mastermind
+
+
+##Week 3: list data structure
+* Recursion on Lists
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/96238
+Every list must be either
+* [][] or
+* (x:xs)(x:xs) for some xx (the head of the list) and xsxs (the tail).
+, where (x:xs)(x:xs) is an alternative syntax for consxxs
+
+The recursive definition follows the structure of the data:
+* Base case of the recursion is [][].
+* Recursion (or induction) case is (x:xs)(x:xs).
+
+**filter** is given a predicate (a function that gives a Boolean result) and a list, and returns a list of the elements that satisfy the predicate.
+`filter :: (a->Bool) -> [a] -> [a]`
+Filtering is useful for the “generate and test” programming paradigm.
+`filter (<5) [3,9,2,12,6,4] -- > [3,2,4]`
 
 
 ##Bookmark
-https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/116038
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/96238
 
 
 
