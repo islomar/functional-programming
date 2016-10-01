@@ -2,9 +2,7 @@
 turn :: Int -> Int -> Int -> IO ()
 turn number_to_guess guess turns =
   do 
-    putStrLn ("You want to guess the number " ++ (show number_to_guess))
-    putStrLn ("Your guess is " ++ (show guess))
-    putStrLn ("You have " ++ (show turns) ++ " turns")
+    putStrLn ("You have " ++ (show turns) ++ " turns to guess the number... Let's play!!!")
     do if turns==0
         then putStrLn "You lose"
         else if number_to_guess==guess
