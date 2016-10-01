@@ -24,3 +24,14 @@ http://localhost:8000/src/main.elm
 `model | counter = model.counter + 1` >> it takes the model object and creates a new one changing the counter attribute (that's the | mission)
 
 Install **elm-format**
+
+Recommended: "Elm in Action"
+
+
+
+In Elm, using **subscriptions** is how your application can listen for external input. Some examples are:
+
+* Keyboard events
+* Mouse movements
+* Browser locations changes
+* Websocket events
