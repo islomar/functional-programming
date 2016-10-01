@@ -13,3 +13,10 @@ http://elm-lang.org/
 
 https://github.com/vgaltes
 
+
+`elm reactor`
+Te arranca en localhost:8000
+
+
+
+http://localhost:8000/src/main.elm
