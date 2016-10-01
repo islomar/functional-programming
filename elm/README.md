@@ -14,9 +14,13 @@ http://elm-lang.org/
 https://github.com/vgaltes
 
 
-`elm reactor`
-Te arranca en localhost:8000
+`elm reactor`: te arranca en localhost:8000
 
 `elm make main.elm --output main.js`
 
 http://localhost:8000/src/main.elm
+
+
+`model | counter = model.counter + 1` >> it takes the model object and creates a new one changing the counter attribute (that's the | mission)
+
+Install **elm-format**
