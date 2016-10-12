@@ -26,6 +26,11 @@ https://hub.docker.com/_/haskell/
 `docker run -it --rm haskell:7.10.3`
 `docker run -it --rm haskell:8.0.1`
 
+##Haskel history
+https://www.youtube.com/watch?v=3bjXGrycMhQ
+https://wiki.haskell.org/History_of_Haskell
+
+
 ##Week 1
 Expressions are really all there is, there are no statements. An expression evaluates to a result
 Functions:
@@ -251,12 +256,12 @@ For now, all we need to understand is:
 
 
 ##Week 3: list data structure
-* Recursion on Lists
+###Recursion on Lists
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/96238
 Every list must be either
-* [][] or
-* (x:xs)(x:xs) for some xx (the head of the list) and xsxs (the tail).
-, where (x:xs)(x:xs) is an alternative syntax for consxxs
+* [] or
+* (x:xs) for some x (the head of the list) and xs (the tail).
+, where (x:xs) is an alternative syntax for x cons xs
 
 The recursive definition follows the structure of the data:
 * Base case of the recursion is [][].
@@ -267,9 +272,182 @@ The recursive definition follows the structure of the data:
 Filtering is useful for the “generate and test” programming paradigm.
 `filter (<5) [3,9,2,12,6,4] -- > [3,2,4]`
 
+**generate and test programming paradigm**
+https://www.siggraph.org/education/materials/HyperVis/concepts/gen_test.htm
+
+###Computations over lists
+Many computatations that would be for/while loops in an imperative language are naturally expressed as list computations in a functional language.
+There are some common cases:
+* Perform a computation on each element of a list: mapmap
+* Iterate over a list, from left to right: foldlfoldl
+* Iterate over a list, from right to left: foldr
+
+Function composition:
+* We can express a large compution by “chaining together” a sequence of functions that perform smaller computations
+* This is traditional mathematical notation; just remember that in f∘gf∘g, the functions are used in right to left order.
+* Haskell uses . as the function composition operator
+
+**Composition of maps**
+`map f [x0,x1,x2] -- > [f x0, f x1, f x2]`
+
+A common style is to define a set of simple computations using map, and to compose them.
+
+`map f (map g xs) = map (f . g) xs`
+This theorem is frequently used, in both directions.
+
+Recursive definition of map
+```
+map :: (a -> b) -> [a] -> [b]
+map _ []     = []
+map f (x:xs) = f x : map f xs
+```
+
+###Folding a list (reduction)
+An iteration over a list to produce a singleton value is called a fold
+`foldl :: (b->a->b) -> b -> [a] -> b`
+
+**point free**: instead of writing
+`sum xs = foldr (+) 0 xs
+product xs = foldr (*) 1 xs`
+
+, you can “factor out” the xs that appears at the right of each side of the equation, and write:
+```
+sum      = foldr (+) 0
+product  = foldr (*) 1
+```
+
+
+###Functional Maps and Folds versus Imperative Loops
+https://github.com/wimvanderbauwhede/HaskellMOOC/tree/master/MapsFoldsLoopsTutorial
+
+* **map**: loop over list element-by-element, append new element to new list
+* **foldl**: loop over list element-by-element, update accumulator using current accumulator and element
+* **foldr**: loop over reverse list element-by-element, update accumulator using current accumulator and element
+* Note:
+```
+    map :: (a -> b) -> [a] -> [b]
+    foldl :: (b -> a -> b) -> b -> [a] -> b 
+    foldr :: (a -> b -> b) -> b -> [a] -> b
+```
+
+###Defining conditional functions
+Option 1:
+```
+length [] = 0
+length x:xs = 1 + length xs
+```
+
+Option 2:
+```
+length lst =
+  if lst == []
+    then 0
+    else let x:xs = lst in 1 + length xs
+```
+
+Option 3: Alternatively, you can use what is known as "guards", e.g.
+```
+length lst
+  | lst == [] = 0
+  | otherwise = let x:xs = lst in 1 + length xs
+```
+
+Option 4:
+```
+f = f' where f' 1 = 0; f' x = x + f' (x-1)
+```
+
+Filter example:
+```
+λ filter (\x -> 2*x>10) [3,9,2,12,6,4]
+[9,12,6]
+```
+**Recursive definition for filter**
+```
+filter pred lst
+  | null lst = []
+  | otherwise = if pred x 
+     then x:filter pred xs
+     else filter pred xs
+       where x:xs=lst
+```
+
+A recursive function must have at least two cases:
+* base case
+* induction case
+
+**Summary**
+For list operations, it is usually easier to use higher-order functions like map (performing an operation on every element of a list) and foldl/foldr (reducing a list to a single value). Sometimes these functions are referred to as list combinators.
+
+
+##Define your own data types
+`data SimpleNum = One | Two | Many deriving Show`
+```
+Prelude> :t One
+One :: SimpleNum
+
+Prelude> :set +m    >> to be able to format a function through several lines
+
+Prelude> let convert 1 = One
+Prelude|     convert 2 = Two
+Prelude|     convert _ = Many
+```
+
+**Type constructors to build record types (product data types)**:
+```
+Prelude> data CricketScore = Score [Char] Int Int deriving Show
+Prelude> 
+Prelude> let x = Score "New Zealand" 350 4
+Prelude| 
+Prelude> x
+Score "New Zealand" 350 4
+Prelude> :t x
+x :: CricketScore
+```
+
+The alternative values relate to **algebraic sums**, and the record values relate to **algebraic products**.
+
+###Grow a tree
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/116718
+```
+data Tree = Leaf | Node Int Tree Tree deriving Show
+```
+
+Let’s write a function to compute the depth of a Tree — this is the maximum number of branches from the root to any leaf. To write this function, we will do pattern matching on the different kinds of Tree, i.e. Leaf and Node values.
+```
+treeDepth :: Tree -> Int
+treeDepth Leaf = 0
+treeDepth (Node _ leftSubtree rightSubtree) = 
+  1 + max (treeDepth leftSubtree) (treeDepth rightSubtree)
+```
+
+**Purely Functional Data Structures**
+https://www.cs.cmu.edu/~rwh/theses/okasaki.pdf
+https://en.wikipedia.org/wiki/Purely_functional_data_structure
+A persistent data structure that does not rely on mutable state
+
+
+###Type Classes
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120260
+Int, Float, Integer
+
+Type classes: (+), (==), (<), show, read
+```
+read "1" :: Int
+read "True" :: Bool
+```
+`data SimpleNum = One | Two | Many deriving (Show, Read, Eq)`
+
+Type classes were one of the early innovations of the Haskell programming language. 
+* The type class constrains member types to provide functions that conform to certain type signatures effectively, API constraints.
+* Type classes are like interfaces in C# and Java. 
+* Types in the type class are like concrete implementations of the interface. 
+* Type classes provide a neat mechanism to enable operator overloading in the Haskell language. 
+
+
 
 ##Bookmark
-https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/96238
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120258
 
 
 
