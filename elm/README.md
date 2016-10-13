@@ -16,7 +16,7 @@ https://github.com/vgaltes
 
 `elm reactor`: te arranca en localhost:8000
 
-`elm make main.elm --output main.js`
+`elm make main.elm --output main.js` >> 8k lines of code!!!
 
 http://localhost:8000/src/main.elm
 
@@ -27,11 +27,15 @@ Install **elm-format**
 
 Recommended: "Elm in Action"
 
-
-
 In Elm, using **subscriptions** is how your application can listen for external input. Some examples are:
 
 * Keyboard events
 * Mouse movements
 * Browser locations changes
 * Websocket events
+
+Pattern matching: is it really just a `switch`? O_o
+
+Refactoring is easier:
+* Type systems help you
+* Not having nulls help you
