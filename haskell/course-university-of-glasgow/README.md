@@ -345,7 +345,7 @@ length lst =
     else let x:xs = lst in 1 + length xs
 ```
 
-Option 3: Alternatively, you can use what is known as "guards", e.g.
+Option 3: Alternatively, you can use what is known as "guards" (the pipe), e.g.
 ```
 length lst
   | lst == [] = 0
@@ -443,6 +443,119 @@ Type classes were one of the early innovations of the Haskell programming langua
 * Type classes are like interfaces in C# and Java. 
 * Types in the type class are like concrete implementations of the interface. 
 * Type classes provide a neat mechanism to enable operator overloading in the Haskell language. 
+
+
+##Week 4: When programs get bigger
+
+###Keep your programs tidy
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120283
+
+**let**
+In Haskell, a let expression provides local scope. 
+```
+let x = 2
+    y = 3
+in x+y
+```
+
+```
+let diameter = 2*radius
+    circumference = pi*diameter
+in (diameter, circumference)
+```
+
+**where**
+There is another syntax for introducing local variables, called the where clause. The where keyword, inside an equation, provides definitions for variables that are used in the equation.
+```
+squareplusone :: Int -> Int
+squareplusone x = xsquared + 1
+ where xsquared = x*x
+```
+
+**Differences between let and where**
+* `let` expressions are expressions; let can be used anywhere an expression is allowed.
+* `where` clauses are not expressions; they can be used only to provide some local variables for a top level equation.
+
+###Guards, guards!
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120286
+Haskell provides a notation for defining functions based on predicate values.
+
+`absolute x = if (x<0) then (-x) else x`
+or with guards
+```
+absolute x
+  | x<0 = -x
+  | otherwise = x
+```
+Guards are easier to read than if/then/else if there are more than two conditional outcomes
+
+####Example
+```
+holeScore :: Int -> Int -> String
+holeScore strokes par
+  | strokes < par = show (par-strokes) ++ " under par"
+  | strokes == par = "level par"
+  | strokes > par = show(strokes-par) ++ " over par"
+```
+
+How could we tidy this up? Maybe we could turn the final guard into otherwise and also refactor with a where clause.
+```
+holescore :: Int -> Int -> String
+holeScore strokes par
+  | score < 0 = show (abs score) ++ " under par"
+  | score == 0 = "level par"
+  | otherwise = show(score) ++ " over par"
+ where score = strokes-par
+```
+
+####Case expressions
+The case expression examines the value, and chooses the corresponding clause. It’s like a guard, but it selects based on the form of the value, i.e. it does **pattern matching**.
+Here is a sum data type for my pets.
+`data Pet = Cat | Dog | Fish`
+
+And here is how I greet my pets.
+```
+hello :: Pet -> String
+hello x = 
+  case x of
+    Cat -> "meeow"
+    Dog -> "woof"
+    Fish -> "bubble"
+```
+
+Note that each pattern is followed by an arrow and then a value.
+
+
+Let’s add a Parrot with a String name.
+```
+data Pet = Cat | Dog | Fish | Parrot String
+
+hello :: Pet -> String
+hello x = 
+  case x of
+    Cat -> "meeow"
+    Dog -> "woof"
+    Fish -> "bubble"
+    Parrot name -> "pretty " ++ name
+```
+We could redefine hello as:
+```
+hello :: Pet -> String
+hello x =
+  case x of
+    Parrot name -> "pretty " ++ name
+    _ -> "grunt"
+```
+
+The `if` expression is just syntactic sugar that is rewritten automatically.
+
+**GUARDS dispatch based on the outcome of Boolean expressions, whereas CASES dispatch based on the _structure_ of the expression (this is pattern matching).**
+
+###Dealing with Uncertainty
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120264
+
+**Maybe**: equivalent to Optional in Java 8.
+
 
 
 
