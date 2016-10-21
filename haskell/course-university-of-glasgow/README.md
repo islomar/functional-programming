@@ -555,7 +555,7 @@ The `if` expression is just syntactic sugar that is rewritten automatically.
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120264
 
 **Maybe**: equivalent to Optional in Java 8.
-
+https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-Maybe.html
 
 
 

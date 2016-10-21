@@ -14,8 +14,6 @@ Interesting links:
 * Don’t fear the monad: https://www.youtube.com/watch?v=ZhuHCtR3xq8
 
 
-
-
 ##Hablapps course
 * Los **traits** son interfaces que permiten implementación parcial, con lo que se permite la herencia múltiple.
   * http://jim-mcbeath.blogspot.com.es/2009/08/scala-class-linearization.html
