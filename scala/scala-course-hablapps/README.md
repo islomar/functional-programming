@@ -8,6 +8,7 @@ Dici@18.
 
 https://github.com/hablapps/funcourseinscala
 
+https://www.reddit.com/r/scalaEs/
 
 
 ##¿Qué es la programación funcional?
@@ -129,7 +130,77 @@ node = (left: Int, a: A, right: Int) => max(1, r) + 1
  * No encapsulan comportamiento
 
 
-##Week 2: 
+##Week 2: Más allá de las HOFs (type classes)
+Las Type classes son el patrón de diseño más importante de la programación funcional.
+**Type class**: funcionalidad asociada a un tipo genérico. Es un diccionario de funciones y valores indexado por tipos de datos.
+ * Las type classes son interfaces genéricas que definen una funcionalidad que proporciona el tipo que parametrizan (métodos, valores).
+**Monoides**: 
+ * polimorfismo ad-hoc
+ * Su función es recoger N y devolver 1.
+Con las type classes tienes la capacidad de sobrecargar de manera similar a la herencia en OO.
+
+Dos características de las type classes:
+* **Generalidad**: poder clasificar muchos tipos.
+* **Expresividad**: número de operaciones derivadas que podré definir a partir de las operaciones primitivas.
+
+###Implícitos (aberración absoluta, kk)
+Me permite ahorrarme parámetros, dejar que el compilador busque por mí.
+http://docs.scala-lang.org/tutorials/tour/implicit-parameters.html
+http://www.cakesolutions.net/teamblogs/demystifying-implicits-and-typeclasses-in-scala
+
+* **Argumentos/parámetros implícitos**
+ * Los implícitos siempre son el último grupo de argumentos. Se buscan en el scope, de abajo a arriba, y no por el nombre, sino por el tipo (e.g. búscame algún implícito de tipo String).
+
+* **Conversiones implícitas**
+ * Ejemplo de conversión implícita de Double a Int.
+
+Se puede crear una jerarquía de implícitos.
+
+###Context Bounds
+`implicitly`: puedes quitarlo como parámetro y declararlo dentro.
+Aún mejor, con azúcar sintáctico: `implicit class`
+
+**Una type class tiene cinco partes**:
+* **Interfaz abstracta**∫: la de Order es 'compare'
+* **Interfaz Concreta**: las que puedes definir en función de la abstracta; de Order son 'gt', 'lt', etc.
+* **Instances**
+ * Hay una especial, el `apply`, que se suele llamar 'summoner' (=invocador) >> para buscar una evidencia implícita de un tipo
+  * Puedes crear una jerarquía de instancias (heredando), por ejemplo para la suma y el producto (ver ejemplo).
+* **Syntax**
+ * e.g. OrderSyntax, poder usar cosas como `>`, `<`
+ * acceso directo a la type class, pero no tener que poner el implicit en el context. bound.
+* **Laws**
+ * Condiciones que debe cumplir la type class: antisimétrica, transitiva, etc.
+ * **ScalaCheck**: para property-based testing. Suite de tests que trabaja sobre generadores: dado un generador de As, generaría N millones, y miraría si la propiedad se cumple para todos los casos.
+
+:::     >> concatenar listas
+::      >> unir elemento y lista
+
+
+**ScalaZ** es una librería de type classes.
+
+`apply` te da una instancia
+
+
+###Otros patrones OO
+* Herencia
+* Adapter vs Type classes
+
+
+###Higher-kinds generics
+* Tipos concretos ( * ): String, Int, Potato
+* Constructores de tipos ( * -> * ): List[_], Option[_]  >> sólo necesita un tipo para completarse
+* Either[_, _] ( * -> * -> * )  >> necesita dos tipos para completarse
+
+Convención para constructores de tipo: F, G, H
+Convención para tipos: A, B, C
+
+Un **Functor** es una type class que contiene la función `map`, no parametrizada sobre un tipo concreto, sino sobre un constructor de tipo genérico (usa F en lugar de List u Option).
+
+
+###Representación de datos
+Tipos de datos como type classes, similar a las factorías abstractas.
+
 
 
 
@@ -149,6 +220,8 @@ S -> (A, S)  >> (S*A)^S
 `def curried[A, B, C]: A => (B => C)`  >> A -> (C^B) = C^BA
 
  **isomorphism**: One-to-one mapping between two objects so you can go back-and-forth without losing information
+
+
 
 ###Category Theory
 A -> B
@@ -202,6 +275,7 @@ So much software is just mapping between things!
 ##A leer/revisar/buscar/investigar:
 * http://www.slideshare.net/kenbot/your-data-structures-are-made-of-maths
 * http://julien.richard-foy.fr/blog/2013/02/21/be-friend-with-covariance-and-contravariance/
+* Companion objects (visto en curso de Scala)
 * http://www.scala-lang.org/old/node/123
 * http://docs.scala-lang.org/tutorials/tour/case-classes.html
 * http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/
@@ -211,3 +285,7 @@ So much software is just mapping between things!
 * Tuple: https://en.wikipedia.org/wiki/Tuple
 * Parametric polymorphism:   https://en.wikipedia.org/wiki/Parametric_polymorphism
 * Predicate:    https://en.wikipedia.org/wiki/Predicate_(mathematical_logic)
+
+
+* Implícitos
+* Singletons, herencia...
