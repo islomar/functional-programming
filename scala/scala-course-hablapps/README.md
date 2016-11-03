@@ -11,7 +11,7 @@ https://github.com/hablapps/funcourseinscala
 https://www.reddit.com/r/scalaEs/
 
 
-##¿Qué es la programación funcional?
+##Semana 1: ¿Qué es la programación funcional?
 * Scala es de 2004.
 * La programación funcional es programar con funciones puras.
 
@@ -112,7 +112,8 @@ Scala es orientada a objetos con facilidad para programar de manera funcional.
 ####Fold: catamorfismo
 * Es una forma de interpretar/consumir/plegar un ADT: F[A] --> fold --> B
   * El B no tiene por qué ser una estructura más pequeña que la inicial
-* Es parecido a un reduce, es más limitado: sólo puedes sacar como resultado el mismo tipo que la lista que "entre"
+* Es parecido a un reduce, aunque un reduce es más limitado: sólo puedes sacar como resultado el mismo tipo que la lista que "entre"
+  * http://blog.plasmaconduit.com/reduve-vs-fold-in-scala/
 * **Ejemplo suma**: `fold(Int, (Int, Int) => Int`, con `nil=0` y `cons = (i1: Int, i2: Int) => i1 + i2`
 Un catamorfismo consiste en sustituir los constructores por los argumentos.
 `List(1, 2, 3, 4, 5).foldRight(0)(_+_)`
@@ -130,17 +131,23 @@ node = (left: Int, a: A, right: Int) => max(1, r) + 1
  * No encapsulan comportamiento
 
 
-##Week 2: Más allá de las HOFs (type classes)
+##Semana 2: Más allá de las HOFs (type classes)
 Las Type classes son el patrón de diseño más importante de la programación funcional.
+
 **Type class**: funcionalidad asociada a un tipo genérico. Es un diccionario de funciones y valores indexado por tipos de datos.
  * Las type classes son interfaces genéricas que definen una funcionalidad que proporciona el tipo que parametrizan (métodos, valores).
+ * Capturan funcionalidad altamente reutilizable de una manera extensible, facilitando la corrección 
+
 **Monoides**: 
  * polimorfismo ad-hoc
  * Su función es recoger N y devolver 1.
+ * Un monoide es un tipo de datos para el que podemos dar un zero y una operación binaria de composición (suma). Estas operaciones deben satisfacer determinadas leyes: 1) elemento neutro y 2) asociatividad.
+ * Un monoide define una clase de tipos (type class): aquellos para los que hay un zero y una operación binaria con esas propiedades.
+
 Con las type classes tienes la capacidad de sobrecargar de manera similar a la herencia en OO.
 
-Dos características de las type classes:
-* **Generalidad**: poder clasificar muchos tipos.
+Dos características deseables de las type classes:
+* **Generalidad**: poder clasificar muchos tipos (e.g. hay muchísimas instancias de monoides).
 * **Expresividad**: número de operaciones derivadas que podré definir a partir de las operaciones primitivas.
 
 ###Implícitos (aberración absoluta, kk)
@@ -200,6 +207,41 @@ Un **Functor** es una type class que contiene la función `map`, no parametrizad
 
 ###Representación de datos
 Tipos de datos como type classes, similar a las factorías abstractas.
+
+###Lecturas recomendadas para la semana 2
+* http://danielwestheide.com/blog/2013/02/06/the-neophytes-guide-to-scala-part-12-type-classes.html
+* http://danielwestheide.com/scala/neophytes.html
+* Ejercicios para el libro rojo: http://blog.higher-order.com/assets/fpiscompanion.pdf
+
+
+###Dudas semana 2
+* En la definición de una type class, ¿qué significa la parte de "indexado por tipos de datos"? ¿Que debe ser genérica?
+
+
+
+##Semana 3: funciones puras y lenguajes
+Para acceso a DB: Slick (http://slick.lightbend.com/)
+Functional architecture: Pure functions -- programs (languages) -- interpreters (side-effectful)
+La pureza de una función se evalúa presumiendo pureza en los parámetros que recibe.
+
+Posibles efectos secundarios:
+* Logging
+* Estados mutables
+* Errores
+
+Ejemplo en meetap_v2.0
+doAndThen == flatMap
+
+**For comprehension**
+```
+for {
+    variableALaQueAsignar: A <- LaFdA: F[A]
+} yield LoQueQuieroDevolver
+```
+* Necesitamos un flatMap y un map
+* El `for` no es un bucle. Se aplica/busca un flatMap que pase de F[A] a A (fallará si no encuentra un flatMap).
+ * Todo lo que hay dentro del for es un flatMap, excepto lo último, que es un map.
+* El `yield` empaqueta y envuelve.
 
 
 
