@@ -1,0 +1,4 @@
+alias test-tema0=;testOnly org.hablapps.scalaintro.test.*
+alias test-tema0-oo=;testOnly org.hablapps.scalaintro.test.OOSpec
+alias test-tema0-fun=;testOnly org.hablapps.scalaintro.test.FuncionalSpec
+alias test-tema0-gen=;testOnly org.hablapps.scalaintro.test.GenericidadSpec
