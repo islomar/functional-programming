@@ -171,7 +171,7 @@ Aún mejor, con azúcar sintáctico: `implicit class`
 * **Interfaz abstracta**∫: la de Order es 'compare'
 * **Interfaz Concreta**: las que puedes definir en función de la abstracta; de Order son 'gt', 'lt', etc.
 * **Instances**
- * Hay una especial, el `apply`, que se suele llamar 'summoner' (=invocador) >> para buscar una evidencia implícita de un tipo
+ * Hay una especial, el `apply`, que se suele llamar 'summoner' (=invocador) >> para buscar una evidencia (ev, la interfaz abstracta) implícita de un tipo
   * Puedes crear una jerarquía de instancias (heredando), por ejemplo para la suma y el producto (ver ejemplo).
 * **Syntax**
  * e.g. OrderSyntax, poder usar cosas como `>`, `<`
@@ -203,7 +203,7 @@ Convención para constructores de tipo: F, G, H
 Convención para tipos: A, B, C
 
 Un **Functor** es una type class que contiene la función `map`, no parametrizada sobre un tipo concreto, sino sobre un constructor de tipo genérico (usa F en lugar de List u Option).
-
+http://www.casualmiracles.com/2012/01/08/a-small-functor-example/
 
 ###Representación de datos
 Tipos de datos como type classes, similar a las factorías abstractas.
@@ -213,6 +213,12 @@ Tipos de datos como type classes, similar a las factorías abstractas.
 * http://danielwestheide.com/scala/neophytes.html
 * Ejercicios para el libro rojo: http://blog.higher-order.com/assets/fpiscompanion.pdf
 
+####Mis lecturas
+* http://docs.scala-lang.org/tutorials/tour/implicit-parameters.html
+* http://www.casualmiracles.com/2012/01/08/a-small-functor-example/
+* http://www.cakesolutions.net/teamblogs/demystifying-implicits-and-typeclasses-in-scala
+  * But, yes, I'd say it's generally not a great idea to use implicit parameters. They're simply not ... explicit enough, and can lead to hard-to-debug magical behaviour.
+  * Instead of having Wrapper implement an interface directly, typeclasses let us split up the definition of the class and the implementation of the interface. That means I can implement an interface for your class, or that a third party can implement my interface for your class, and everything basically ends up working out. Trying to solve this modularity problem without typeclasses leads to ugly subtyping hacks.
 
 ###Dudas semana 2
 * En la definición de una type class, ¿qué significa la parte de "indexado por tipos de datos"? ¿Que debe ser genérica?
