@@ -558,6 +558,20 @@ https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/12026
 https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-Maybe.html
 
 
+`fmap inc (Just 1)`   >> Just 2
+**fmap** allows a function to be applied to the value inside the Maybe.
+
+
+##Parsing Text Using Higher-Order Functions
+* **Parser combinators**: Parser combinators are functions that allow you to combine smaller parsers into bigger ones.
+* They are higher-order functions that take functions as arguments and return functions
+
+###A Quick Primer on Monads
+* A computation done in a monad returns a “monadic” type, we say that the string is returned inside the monad.
+
+**Parsing using Parsec: a practical example**
+https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/108393
+
 
 ##Bookmark
 https://www.futurelearn.com/courses/functional-programming-haskell/1/steps/120258
